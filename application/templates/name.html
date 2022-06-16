@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
-{% block body %}
-{% for user in ["ben", ""]}
-{% endfor%}
-{% endblock body %}
+    {% block body %}
+        {% for user in ["ben", "harry", "bob", "jay", "matt", "bill"] %}
+            {% if user[0] == 'b' %}
+            <p>{{ user }}</p>
+            {% else %}
+            <p> </p>
+            {% endif%}
+        {% endfor%}
+
+    {% endblock body %}
