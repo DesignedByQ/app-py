@@ -2,8 +2,37 @@ from application import app
 from application import db
 from application.models import ToDo
 from flask import redirect, url_for, render_template, request
-from application.forms import BasicForm
+from application.forms import BasicForm, TodoForm
 
+@app.route('/')
+def index():
+    todo = ToDo.query.all()
+    return render_template('task.html', todolist=todo)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/task')
+def task():
+    return render_template('task.html')
+
+@app.route('/adding', methods=['GET', 'POST'])
+def adding():
+    message = ""
+    form = TodoForm()
+
+    if request.method == 'POST':
+        ntask = form.ntask.data
+        status = form.status.data
+        message = ntask + ' has been added'
+
+        if ntask:
+            new_task = ToDo(task=ntask)
+            db.session.add(new_task)
+            db.session.commit()  
+
+    return render_template('adding.html', form=form, message=message)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
@@ -14,11 +43,12 @@ def register():
     if request.method == 'POST':
         first_name = form.first_name.data
         last_name = form.last_name.data
+        food = form.food.data
 
         if len(first_name) == 0 or len(last_name) == 0:
             message = "Please supply both first and last name"
         else:
-            message = f'Thank you, {first_name} {last_name}'
+            message = f'Thank you, {first_name} {last_name} {food}'
 
     return render_template('home.html', form=form, message=message)
 
@@ -39,18 +69,14 @@ def index():
     todo = ToDo.query.first()
     return todo.task'''
 
-@app.route('/')
+'''@app.route('/')
 def index():
     todo = ToDo.query.all()
     empstr = ""
     for t in todo:
         empstr += f'{t.id} {t.task} {t.completed} <br>'
 
-    return empstr
-
-'''@app.route('/add')
-def add():
-    return 'Added a new todo'''
+    return empstr'''
 
 @app.route('/read')
 def read():

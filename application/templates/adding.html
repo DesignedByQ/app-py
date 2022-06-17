@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Task form</title>
+    </head>
+    <body>
+        {% extends "layout.html" %}
+        {% block body %}
+        <br>
+        
+        
+
+        <div class='form'>
+            <form method='POST' action=''>
+                {{ form.hidden_tag() }}
+                {{ form.ntask.label }} {{ form.ntask }}
+                <br>
+                {{ form.status.label }} {{ form.status }}
+                <br>
+                {{ form.submitted }}
+                <br>
+            {{ message }}
+            </form>
+        </div>
+
+        {% endblock body %}
+    </body>
+</html>

@@ -7,7 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello</h1>
+    <a href="{{ url_for('index') }}">Tasks</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('adding') }}">Adding</a>
+    <h1>Task List</h1>
+
     {% block body %}
     {% endblock body %}
 </body>

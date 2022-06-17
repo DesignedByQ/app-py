@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block body %}
+<br>
+{% for i in todolist %}
+<p>Task: {{ i.task}}</p>
+<p>Status: {{ i.completed}}</p> <br> <br>
+{% endfor %}
+{% endblock body %}
