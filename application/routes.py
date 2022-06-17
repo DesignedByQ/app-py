@@ -2,7 +2,7 @@ from application import app
 from application import db
 from application.models import ToDo
 from flask import redirect, url_for, render_template, request
-from application.forms import BasicForm, TodoForm
+from application.forms import BasicForm, TodoForm, EditForm
 
 @app.route('/')
 def index():
@@ -100,8 +100,14 @@ def update(extask, status):
 @app.route('/complete/<int:id>')
 def complete(id):
     todo = ToDo.query.get(id)
-    todo.completed = True
+
+    if todo.completed == False:
+        todo.completed = True
+    elif todo.completed == True:
+        todo.completed = False
+    
     db.session.commit()
+    
     return redirect(url_for('index'))
 
 @app.route('/updatename/<oldname>/<newname>')
@@ -110,6 +116,22 @@ def updatename(oldname, newname):
     select_task.task = newname
     db.session.commit()
     return f"{oldname} has been updated to {select_task.task}"
+
+@app.route('/edit', methods=['GET', 'POST', 'PUT'])
+def edit():
+    message = ""
+    form = EditForm()
+
+    if request.method == 'PUT':
+        ntask = form.ntask.data
+        message = ntask + ' has been updated'
+
+        if ntask:
+            select_task = ToDo.query.filter_by(id=1).first()
+            select_task.task = ntask
+            db.session.commit()  
+
+    return render_template('edit.html', form=form, message=message)
 
 @app.route('/add/<ntask>')
 def add(ntask):
@@ -124,3 +146,10 @@ def delete(extask):
     db.session.delete(to_be_del)
     db.session.commit()
     return extask + " " + 'deleted'
+
+@app.route('/deleting/<int:id>')
+def deleting(id):
+    to_be_del = ToDo.query.get(id)
+    db.session.delete(to_be_del)
+    db.session.commit()
+    return redirect(url_for('index'))

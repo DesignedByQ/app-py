@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 
-app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
+app.config['SECRET_KEY'] = os.getenv('YOUR_SECRET_KEY')
 
 db = SQLAlchemy(app)
 

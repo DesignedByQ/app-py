@@ -12,3 +12,7 @@ class TodoForm(FlaskForm):
     ntask = StringField('Task')
     status = BooleanField('Status')
     submitted = SubmitField('Add Task')
+
+class EditForm(FlaskForm):
+    ntask = StringField('New Task')
+    submitted = SubmitField('Edit Task')

@@ -3,6 +3,21 @@
 <br>
 {% for i in todolist %}
 <p>Task: {{ i.task}}</p>
-<p>Status: {{ i.completed}}</p> <br> <br>
+<p>Status: {{ i.completed}}</p>
+
+<form action="{{ url_for('deleting', id=i.id) }}">
+<button type="Submit">Delete Task</button>
+</form>
+   
+<form action="{{ url_for('complete', id=i.id) }}">
+<button type="Submit">Update Status</button>
+</form>
+
+<form action="{{ url_for('edit', id=i.id) }}">
+<button type="Submit">Edit Task</button>
+</form>
+
+<br><br>
+    
 {% endfor %}
 {% endblock body %}

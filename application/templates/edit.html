@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Task form</title>
+        <title>Update Task</title>
     </head>
     <body>
         {% extends "layout.html" %}
@@ -8,11 +8,9 @@
         <br>
         
         <div class='form'>
-            <form method='POST' action=''>
+            <form method='PUT' action=''>
                 {{ form.hidden_tag() }}
                 {{ form.ntask.label }} {{ form.ntask }}
-                <br>
-                {{ form.status.label }} {{ form.status }}
                 <br>
                 {{ form.submitted }}
                 <br>
