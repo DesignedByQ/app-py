@@ -117,19 +117,18 @@ def updatename(oldname, newname):
     db.session.commit()
     return f"{oldname} has been updated to {select_task.task}"
 
-@app.route('/edit', methods=['GET', 'POST', 'PUT'])
-def edit():
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
     message = ""
     form = EditForm()
-
-    if request.method == 'PUT':
-        ntask = form.ntask.data
-        message = ntask + ' has been updated'
-
-        if ntask:
-            select_task = ToDo.query.filter_by(id=1).first()
-            select_task.task = ntask
-            db.session.commit()  
+    toupdate = ToDo.query.get(id)
+    if form.validate_on_submit():
+        toupdate.task = form.ntask.data
+        db.session.commit()
+        message = form.otask.data + ' has been updated'
+        #return redirect(url_for('index'))
+    elif request.method == 'GET':
+        form.otask.data = toupdate.task
 
     return render_template('edit.html', form=form, message=message)
 

@@ -8,8 +8,10 @@
         <br>
         
         <div class='form'>
-            <form method='PUT' action=''>
+            <form method='POST' action=''>
                 {{ form.hidden_tag() }}
+                {{ form.otask.label }} {{ form.otask }}
+                <br>
                 {{ form.ntask.label }} {{ form.ntask }}
                 <br>
                 {{ form.submitted }}
