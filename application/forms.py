@@ -18,3 +18,5 @@ class EditForm(FlaskForm):
     otask = StringField('Old Task', validators=[DataRequired()])
     ntask = StringField('New Task', validators=[DataRequired()])
     submitted = SubmitField('Edit Task')
+
+

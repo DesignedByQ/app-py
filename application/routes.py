@@ -36,7 +36,7 @@ def adding():
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
-def register():
+def home():
     message = ""
     form = BasicForm()
 
@@ -51,6 +51,16 @@ def register():
             message = f'Thank you, {first_name} {last_name} {food}'
 
     return render_template('home.html', form=form, message=message)
+
+@app.route('/', methods=["GET","POST"])
+def thome():
+    form = ToDoForm()
+    if form.validate_on_submit():
+        ttask = ToDo(task=form.ntask.data, completed=form.completed.data)
+        db.session.add(ttask)
+        db.session.commit()
+    task = ToDo.query.all()
+    return render_template("home.html", task=ttask, form=form)
 
 @app.route('/name')
 def name():
@@ -152,3 +162,4 @@ def deleting(id):
     db.session.delete(to_be_del)
     db.session.commit()
     return redirect(url_for('index'))
+
