@@ -43,11 +43,9 @@ class TestViews(TestBase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'sleeping', response.data)
 
-#class TestViews(TestBase):
     def test_delete(self):
         response = self.client.get(url_for('deleting', id=1))
         follow_redirects=True
-        
         self.assertNotIn(b'sleeping', response.data)
 
     def test_edit(self):
@@ -57,7 +55,6 @@ class TestViews(TestBase):
             completed=False
         ), 
         follow_redirects=True)
-        
         self.assertIn(b'ntask', response.data)
 
     def test_read(self):
