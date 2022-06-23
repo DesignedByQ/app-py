@@ -1,6 +1,7 @@
 # Import the necessary modules
 from flask import url_for
 from flask_testing import TestCase
+import unittest
 
 # import the app's classes and objects
 from application import app, db
@@ -12,7 +13,7 @@ class TestBase(TestCase):
 
         # Pass in testing configurations for the app. 
         # Here we use sqlite without a persistent database for our tests.
-        app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///test.db",
+        app.config.update(SQLALCHEMY_DATABASE_URI="sqlite:///test2.db",
                 SECRET_KEY='mister11',
                 DEBUG=True,
                 WTF_CSRF_ENABLED=False
@@ -44,6 +45,21 @@ class TestViews(TestBase):
 
 #class TestViews(TestBase):
     def test_delete(self):
-        response = self.client.delete(url_for('deleting'))
-        self.assertEqual(response.status_code, 200)
+        response = self.client.get(url_for('deleting', id=1))
+        follow_redirects=True
+        
         self.assertNotIn(b'sleeping', response.data)
+
+    def test_edit(self):
+        response = self.client.post('edit/1', 
+        data=dict(
+            task='ntask',
+            completed=False
+        ), 
+        follow_redirects=True)
+        
+        self.assertIn(b'ntask', response.data)
+
+    def test_read(self):
+        response = self.client.get(url_for('read'))
+        self.assertIn(b'sleeping', response.data)
